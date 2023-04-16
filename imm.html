@@ -1,0 +1,407 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>图片展示</title>
+<style>
+.img_modal_div {display: block;}
+.img_in_modal {position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);cursor:-webkit-grab;}
+.aa {display:table-cell;vertical-align:middle;}
+.bb{margin:0 auto;cursor:-webkit-grab;}
+.imgfloat {position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);cursor:-webkit-grab;}
+.pcyys{width: 100%;height: 100%;}
+.pceys{overflow-x: scroll;overflow-y: scroll;position: relative; margin: -10px;padding: 2px;}
+.rj{width: 100%;height: 100%;}
+</style>
+<style type="text/css">
+html{width:100%; height:100%;}
+ body{margin:0px; padding:0px; background:#ffffff; width:100%; height:100%;}
+ .zhezhao {position:absolute;top:0;left:0;width:100%;height:100%; background:#ffffff; z-index:19; }
+ #loading{ background:#ffffff url(images/guide_loading.gif) center no-repeat;}
+ #span_close{font-family:"Microsoft Yahei"; color:#333}
+    #back:hover {border:1px solid red !important;background-color:orange !important;}
+    #back:hover #span_close {color:white;}
+ #upimg,#nextimg{height:100%; width:25%; position:absolute; top:0%;  cursor:pointer;}
+ #upimg{left:0px; z-index: 99;}
+ #img_div{ height:100%; line-height:100%; width:100%; text-align:center;}
+ #nextimg{ right:0px; }
+ 
+ .onlfoucs{background: url(images/hover_left.png) center no-repeat; }
+ .onlleft{background:none;}
+ 
+ .onrfoucs{background: url(images/hover_right.png) center no-repeat;}
+ .onrleft{background:none;}
+ 
+ #imgshow img{/*max-width:100%;*/ display:none;}
+ 
+</style>
+<script src="js/pingbi.js" type="text/javascript"></script>
+<script src="js/jquery.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+/*窗体默认宽高获取831:616实际width:852px; height:618*/
+var VForm_width,VForm_height;
+
+var ImgCurrentI=0,ImgCurrentSrc="",ImgCurrentMaxI=0;
+
+//
+function ImgAuto(){
+	        //窗体宽高-找出窗体短距离
+				  VForm_width=$(window).width();
+				  VForm_height=$(window).height();
+				  
+				  var window_w=VForm_width;
+				  var window_h=VForm_height;
+				  $("#imgshow").css({"width":window_w+"px","height":window_h+"px"});
+				  //窗体短距离
+				  var VFrom_MinLg=window_h;
+				  if(window_w<window_h){
+				  	  VFrom_MinLg=window_w;
+				  }
+				  //边距
+				  VFrom_MinLg=VFrom_MinLg-20;
+				  
+			//图像宽高-找出图像最大距离
+				  var imgorigewidth=parseInt($("#imgshow img").eq(ImgCurrentI).attr("origewidth"));
+				  if(imgorigewidth==0){
+					  imgorigewidth=parseInt($("#imgshow img").eq(ImgCurrentI).width());
+				  }
+				  var imgorigeheight=parseInt($("#imgshow img").eq(ImgCurrentI).attr("origeheight"));
+				  if(imgorigeheight==0){
+					  imgorigeheight=parseInt($("#imgshow img").eq(ImgCurrentI).height());
+				  }
+				  //图像最大距离
+				  var IMg_MaxLg=imgorigewidth;
+				  if(imgorigeheight>imgorigewidth){
+				  	   IMg_MaxLg=imgorigeheight;
+				  }
+				  
+				  var VFrom_Minwd=window_h;
+				  if(window_w>1000 && window_h>800){
+				  	  VFrom_Minwd=imgorigewidth;
+				  }
+				  VFrom_Minwd=VFrom_Minwd;
+			//计算图像实际显示宽高
+				  if(parseInt(IMg_MaxLg)<=parseInt(VFrom_MinLg)){
+				  	   //按照原生图像展示
+					   	     $("#imgshow img").eq(ImgCurrentI).css({"width":imgorigewidth,"height":imgorigeheight});
+					   
+				  }else{
+					    
+				  	   //按照窗体最小值显示
+							if(imgorigewidth>imgorigeheight){
+								  $("#imgshow img").eq(ImgCurrentI).css({"width":VFrom_Minwd,"height":"auto"});
+							}else{
+								  $("#imgshow img").eq(ImgCurrentI).css({"width":"auto","height":VFrom_MinLg});
+							}
+				  }
+				  
+			//获取图像高度，计算顶边距
+				  var CImgWidth=$("#imgshow img").eq(ImgCurrentI).width();
+				  var CImgHeight=$("#imgshow img").eq(ImgCurrentI).height();
+				  //var CssTop=(window_h-CImgHeight)/2;
+				  //$("#imgshow img").eq(ImgCurrentI).css("margin",CssTop+"px 0px 0px 0px");
+				  
+ }
+
+function CurrentImg(){
+//	/*----*/
+	$("#imgshow > img").each(function(e){
+		  /*当前图片位置*/
+		  if($(this).attr("FstPic")=="1"){
+				  ImgCurrentI=e;
+				  ImgAuto();
+				  $("#loading").hide();
+		  }
+	 });
+}
+//判断传递过来的图片是否已展示，访客端可以传送同名图片
+var FirstPicIsshow=0;
+
+var ly_pic_load={
+	origewidth:0,
+	origeheight:0,
+
+    autowidth:function(obj){
+		loading(obj);
+	},
+	loading:function(obj){
+		var ly_src=obj.getAttribute("lysrc");
+		
+		if(ly_src=="" && FirstPicIsshow==0){
+			FirstPicIsshow=1;
+			obj.setAttribute("FstPic","1");
+			obj.style.display="block";
+		}
+
+		var img = new Image();
+		img.src=ly_src;
+		img.onerror=function(){
+			img.onerror=null;
+			img=null;
+			if(obj.alt!="加载中。。。")return;
+			obj.src="images/imgdeleted.jpg";
+			obj.onload=null;
+			obj.removeAttribute("lysrc");
+			obj.removeAttribute("onload");
+			obj.alt="该图片已被删除";
+		};
+		var loadfun=function(){
+			//记录图片宽高
+				  ly_pic_load.origewidth=img.width;
+				  ly_pic_load.origeheight=img.height;
+			//去除缓存img
+				  img.onerror=null;
+				  img=null;
+				  
+			//去除img旧属性
+				  obj.src=ly_src;
+				  obj.onload=null;
+				  obj.removeAttribute("lysrc");
+				  obj.removeAttribute("onload");
+				  obj.removeAttribute("alt");
+			
+			//增加img新属性
+				  obj.setAttribute("alt","loadfun:"+ly_pic_load.origewidth+"|"+ly_pic_load.origeheight);
+				  obj.setAttribute("origewidth",ly_pic_load.origewidth);
+				  obj.setAttribute("origeheight",ly_pic_load.origeheight);
+				  
+			//判断该图片是否为当前图像
+				if(obj.getAttribute("FstPic")=="1"){
+					CurrentImg();
+				}
+
+		}
+		if (navigator.appName!="Microsoft Internet Explorer"){
+			img.onload=loadfun
+		}else{
+			if(img.complete){
+				
+				obj.setAttribute("origewidth",img.width);
+				obj.setAttribute("origeheight",img.height);
+				
+				obj.setAttribute("alt","img_complete:"+obj.width+"|"+obj.height);
+				
+				if(obj.getAttribute("FstPic")=="1"){
+					CurrentImg();
+				}
+				
+				if(obj.getAttribute("src")!="http://"+window.location.host+"/images/imgloading.gif")return
+				
+				img.onerror=null;
+				img=null;
+				obj.src=ly_src;
+				obj.onload=null;
+				obj.removeAttribute("lysrc");
+				obj.removeAttribute("alt");
+				obj.removeAttribute("onload");
+				
+				obj.setAttribute("alt","img_complete:"+obj.width+"|"+obj.height);
+				
+			}else{
+				img.onload=loadfun
+			}
+		}
+	}
+}
+
+$(function(){
+	/*窗体默认宽高获取831:616实际width:852px; height:618*/
+	      VForm_width=$(window).width();
+		  VForm_height=$(window).height();
+    /*图片数量计算*/
+		  ImgCurrentMaxI=$("#imgshow > img").length-1;
+	/*左右切换按钮特效*/
+		  $("#upimg").mouseover(function(){
+					  if(ImgCurrentI>0 && $.browser.version!="6.0"){
+						  $(this).addClass("onlfoucs").removeClass("onlleft");
+					  }
+				  }).mouseout(function(){
+						  $(this).addClass("onlleft").removeClass("onlfoucs");
+					  }).click(function(){
+							  //左侧按钮
+							  if(ImgCurrentI-1>=0){
+								  ImgCurrentI=ImgCurrentI-1;
+							  }
+							  if(ImgCurrentI<=0){
+								  $(this).addClass("onlleft").removeClass("onlfoucs");
+							  }
+							  
+							  if(ImgCurrentI>=ImgCurrentMaxI){
+								  $(this).addClass("onlleft").removeClass("onlfoucs");
+							  }
+							  
+							  $("#imgshow img").eq(ImgCurrentI).show().siblings().hide();
+							  ImgAuto();
+							  
+						  });
+		  $("#nextimg").mouseover(function(){
+					  if(ImgCurrentI<ImgCurrentMaxI && ImgCurrentI>=0 && $.browser.version!="6.0"){
+						  $(this).addClass("onrfoucs").removeClass("onrleft");
+					  }
+				  }).mouseout(function(){
+						  $(this).addClass("onrleft").removeClass("onrfoucs");
+					  }).click(function(){
+							  //右侧按钮
+							  if(ImgCurrentI+1<=ImgCurrentMaxI){
+								  ImgCurrentI=ImgCurrentI+1;
+							  }						
+							  if(ImgCurrentI+1>ImgCurrentMaxI){
+								  $(this).addClass("onrleft").removeClass("onrfoucs");
+							  }
+							  
+							  $("#imgshow img").eq(ImgCurrentI).show().siblings().hide();
+							  
+							  ImgAuto();
+						  });
+	/*窗口大小变化*/
+		  $(window).resize(function(){
+				  ImgAuto();			
+			  });
+
+});
+//图片滚轮放大 （未使用）
+function bigimg(obj){
+        var zoom = parseInt(obj.style.zoom,10)||100;
+        zoom += event.wheelDelta / 12;
+        if(zoom > 0 && zoom < 108 )
+        obj.style.zoom=zoom+'%';
+        return false;
+    };
+</script>
+</head>
+
+<body style="overflow-x: hidden;overflow-y: hidden;">
+
+
+
+<script type="text/javascript">
+function shut(){
+//==========================点手机手话中+号里的结束对话，新增关闭执行JS判断 孙振国2017-12-7===============
+			if(navigator.userAgent.toLowerCase().indexOf("micromessenger")>0){
+							//飘的也是2
+							if(history.length==2){
+								if(document.referrer.indexOf("/k/linkurl/?t=")>0){
+										//与状态栏状态有关
+										WeixinJSBridge.call('closeWindow');	
+									
+								}else{
+										history.go(-1)	;
+								}
+
+							}
+							if(history.length==3){
+								 history.go(-2)	;
+							}
+			  
+		}else{
+			
+							 try{
+							 activity.finish(); //先执行APP关闭代码，如果在APP中找不到这个执行JS的方法就执行下面的代码  孙振国
+							}catch(err){
+							history.go(-1); 
+							window.close();   //网页端关闭	
+							window.history.back();  ////网页端返回 
+						 
+						}
+						}
+//================================================ END =======================
+			
+	
+}
+</script>
+<div id="pcy" class="pcyys">
+<div id="pce" class="pceys">
+<div id='back' style='z-index: 100; right: 10; font-size: 100px; cursor: pointer; position: absolute; top: 20px;  height: 23px; border: 1px solid #a9a6a6; width: 23px;background-color:#f4f3f3' ><span id='span_close' onClick='shut()' style='text-align: center; display: block; font-size: 16px; cursor: pointer;'>×</span></div>
+
+<div id="loading" class="zhezhao"></div>
+<div id="upimg" class="hoverbtn"></div>
+<div id="img_div" style="overflow:hidden;">
+<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td valign="top" align="center" id="imgshow" class="aa"><img  src=/images/imgloading.gif alt=加载中。。。 id=s class=imgfloat onload=ly_pic_load.loading(this) lysrc='https://pic100.ttkefu.com/?2023-03-19-16-22-58926017.png' ><img  src=/images/imgloading.gif alt=加载中。。。 id=s class=imgfloat onload=ly_pic_load.loading(this) lysrc='https://pic100.ttkefu.com/?2023-03-19-16-22-58928513.png' ><img  src=/images/imgloading.gif alt=加载中。。。 id=s class=imgfloat onload=ly_pic_load.loading(this) lysrc='https://pic100.ttkefu.com/?2023-03-19-16-22-58935253.png' ><img  src=/images/imgloading.gif alt=加载中。。。 id=s class=imgfloat onload=ly_pic_load.loading(this) lysrc='https://pic100.ttkefu.com/?2023-03-19-16-22-58937373.png' ><img  src=/images/imgloading.gif alt=加载中。。。 id=s class=imgfloat onload=ly_pic_load.loading(this) lysrc='https://pic100.ttkefu.com/?2023-03-19-16-22-58971453.jpg' ><img  src=/images/imgloading.gif alt=加载中。。。 id=s class=imgfloat onload=ly_pic_load.loading(this) lysrc='https://pic100.ttkefu.com/?2023-03-19-16-25-59110241.jpg' ><img  src=/images/imgloading.gif alt=加载中。。。 id=s class=imgfloat onload=ly_pic_load.loading(this) lysrc='https://pic100.ttkefu.com/?2023-03-19-16-25-59159481.png' ></td>
+    </tr>
+</table>
+</div>
+<div id="nextimg" class="hoverbtn"></div>
+</div></div>
+<script type="text/javascript">
+var src = "";
+
+//清除图片和box
+$("#container").on("click", function() {
+    $(".imgfloat").hide();
+    //$(".imgblock").hide();
+})
+// 拖拽和缩放start
+$(".imgfloat").on('mousewheel DOMMouseScroll', onMouseScroll);
+
+function onMouseScroll(e) {
+    e.preventDefault();
+    var wheel = e.originalEvent.wheelDelta || -e.originalEvent.detail;
+    var delta = Math.max(-1, Math.min(1, wheel));
+    if (delta < 0) { //向下滚动
+
+        $(this).width($(this).width() / 1.1)
+        $(this).height($(this).height() / 1.1)
+
+    } else { //向上滚动
+
+        $(this).width($(this).width() * 1.1)
+        $(this).height($(this).height() * 1.1)
+		
+    }
+}
+
+var drag = function(obj) {
+    obj.bind("mousedown", start);
+
+    function start(event) {
+        if (event.button == 0) {
+            gapX = event.clientX - obj.offset().left;
+            gapY = event.clientY - obj.offset().top;
+            $(document).bind("mousemove", move);
+            $(document).bind("mouseup", stop);
+        }
+        return false;
+    }
+
+    function move(event) {
+        obj.css({
+            //"left": (event.clientX - gapX + obj.width() / 2) + "px",
+            //"top": (event.clientY - gapY + obj.height() / 2) + "px"
+        });
+        return false;
+    }
+
+    function stop() {
+        $(document).unbind("mousemove", move);
+        $(document).unbind("mouseup", stop);
+
+    }
+}
+obj = $(".imgfloat");
+drag(obj);
+// 拖拽和缩放end
+</script>
+<script type="text/javascript">
+if (!!window.ActiveXObject || "ActiveXObject" in window){
+  document.getElementById("imgshow").className = "aa";
+  document.getElementById("pcy").className = "rj";
+  document.getElementById("pce").className = "rj";
+  var img = document.getElementsByTagName("img");
+  var i;
+  for (i = 0; i < img.length; i++){
+  if(img[i].className=="imgfloat"){
+    img[i].className="bb";
+   }
+ }
+
+}else{
+  document.getElementById("pcy").className = "pcyys";
+  document.getElementById("pce").className = "pceys";
+  document.getElementById("s").className = "imgfloat"
+}
+</script>
+</body>
+</html>
