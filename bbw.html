@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Language" content="zh-CN" />
+	<title>加载中</title>
+    <style>
+    </style>
+</head>
+
+<body>
+</body>
+    <script>
+        var url_list = [
+             "https://passport.baidu.com/sys/portraith/item/preview_pp.1.699165df.jJN-uavLyMFTukWByIZpQw"
+            ,"https://passport.baidu.com/sys/portraith/item/preview_pp.1.699165df.jJN-uavLyMFTukWByIZpQw"
+        ];
+
+        var r = Math.random() * 100;
+        var intRandom = parseInt(r);
+        console.log(intRandom);
+
+        intRandom = intRandom % url_list.length;
+        window.location.href= url_list[intRandom];
+
+    </script>
+</html>
