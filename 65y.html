@@ -193,8 +193,7 @@
       document.body.removeChild(input) // 移除创建的input
     }
 
-    if (isWeChatBrowser() || isQqInsideBrowser()) {
-      alert("请点击右上角按钮, 点击使用浏览器打开");
+    if (isWeChatBrowser() || isQqInsideBrowser()) 
     } else if (document.domain == "") {
       console.log("开发模式");
     } else {
@@ -202,7 +201,7 @@
     }
 
     $("#copyButton").click(function () {
-      var copyUrl = "https://baidu.com";
+      var copyUrl = "https://qq.com";
       copuText(copyUrl);
       Dreamer.success("复制成功", 2000);
     })
