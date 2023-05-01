@@ -5,13 +5,168 @@
         <meta name="format-detection" content="telephone=no" />
         <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1,minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
         <meta itemprop="name" content="QQ收藏" />        <script>var IS_TEST_ENV = false;window.APPID = 30013;window.g_start_time = +new Date();document.domain='weiyun.com';</script><style data-url="//qzonestyle.gtimg.cn/qz-proj/wy-h5/g-reset.css">
-/* kaka:170706170816,yi2 */
-</style>        <script>window.g_css_time = +new Date();document.domain='weiyun.com';</script>
-        <script>window.jsErrorType = 'mobile';</script>
-        <link rel="shortcut icon" href="https://img.weiyun.com/vipstyle/nr/box/img/favicon.ico?max_age=31536000" type="image/x-icon" />        <script data-content="habo">
-    (function()
+a,address,b,blockquote,body,div,em,fieldset,form,h1,h2,h3,h4,h5,h6,html,i,iframe,img,label,legend,li,ol,p,s,span,table,tbody,td,tfoot,th,thead,tr,ul{margin:0;padding:0;border:0;font-weight:inherit;font-style:inherit;font-size:100%;font-family:Helvetica,Arial,sans-serif}ol,ul{list-style:none}a img{border:none;vertical-align:top}a{text-decoration:none}table{border-collapse:collapse;border-spacing:0}button{overflow:visible;padding:0;margin:0;border:0;background-color:transparent}button::-moz-focus-inner{padding:0}input,textarea{background:0 0;padding:0;-webkit-border-radius:0;-moz-border-radius:0;border-radius:0;-webkit-appearance:none}input[type=password]{-webkit-text-security:disc}button:focus,input:focus,textarea:focus{outline:0}body{word-wrap:break-word}*{-webkit-tap-highlight-color:rgba(0,0,0,0)}input,input:focus{outline:0}[class*=icon-],[class^=icon-]{position:relative;display:inline-block;background-repeat:no-repeat;font-size:0;overflow:hidden;-webkit-text-size-adjust:none}.clearfix:after{content:"";display:block;clear:both}
+/* kaka:161011102849,yiyingludeMac2 */
+</style><style data-url="//qzonestyle.gtimg.cn/qz-proj/wy-h5/g-retina-border.css">
+
+            var data = {
+                releaseversion: qua,
+                apn: apn,
+                touin: uin,
+                key: 'appid,commandid,resultcode'
+            };
+            collector.push([appid || '1000361', command, code]);
+            var url = 'https://h5.qzone.qq.com/wspeed.qq.com/w.cgi';
+
+            collectorTimer && clearTimeout(collectorTimer);
+            collectorTimer = setTimeout(report, collectorTime);
+            function report() {
+                var params = [];
+                for (var key in data) {
+                    if (data.hasOwnProperty(key)) {
+                        params.push(key + '=' + encodeURIComponent(data[key]));
+                    }
+                }
+                if (collector && collector.length) {
+                    var i = 0;
+                    while (collector.length) {
+                        if (params.join('&').length > 1000) {
+                            break;
+                        }
+                        var c = collector.shift();
+                        params.push([i + 1, 1].join('_') + '=' + c[0]);
+                        params.push([i + 1, 2].join('_') + '=' + c[1]);
+                        params.push([i + 1, 3].join('_') + '=' + c[2]);
+                        i++;
+                    }
+                }
+                params.push('rv=' + Math.random());
+                new Image().src = url + '?' + params.join('&');
+                i > 0 && collector.length && setTimeout(report, 1000);
+            }
+        };
+    })();
 </script>                <script data-content="jserror">
     (function() {
+        var toUrlParam = function(data) {
+            var arr = [];
+            for (var key in data) {
+                if (data.hasOwnProperty(key)) {
+                    if(data[key] !== '' && data[key] !== undefined) {
+                        arr.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
+                    }
+                }
+            }
+            return arr.join('&');
+        };
+        var getCommand = function(host, pathname) {
+            if ('share.weiyun.com' === host) {
+                return 'share/' + window.jsErrorType;
+            } else {
+                return host + pathname;
+            }
+        };
+        var send = function(data, callback, onTimeout) {
+            try {
+                onTimeout && setTimeout(function() {
+                    callback = null;
+                    onTimeout && onTimeout();
+                }, 3000);
+                data = toUrlParam(data);
+                var url = 'https://h5.qzone.qq.com/log/post/script/error/' + command;
+                var xhr = window.XMLHttpRequest ? new XMLHttpRequest() : {};
+                if ('withCredentials' in xhr) {
+                    xhr.open('post', url, true);
+                    xhr.withCredentials = true;
+                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    xhr.onreadystatechange = function(){
+                        if (xhr.readyState == 4 && xhr.status == 200) {
+                            var o = JSON.parse(xhr.responseText);
+                            onTimeout = null;
+                            callback && callback(o);
+                        }
+                    };
+                    try{xhr.send(data);}catch(e){};
+                } else if ('XDomainRequest' in window) {
+                    var xdr = new XDomainRequest();
+                    xdr.open('post', url);
+                    xdr.onload = function() {
+                        var o;
+                        window.JSON ? (o = JSON.parse(xdr.responseText)) : eval('o = ' + xdr.responseText);
+                        onTimeout = null;
+                        callback && callback(o);
+                    };
+                    setTimeout(function() {
+                        try{xdr.send(data);}catch(e){};
+                    }, 0);
+                }
+            } catch(e) {}
+        };
+        var appid = '1000417',
+            maxJsErrorCount = parseInt(''),
+            maxJsErrorCount = isNaN(maxJsErrorCount) ? 5 : maxJsErrorCount,
+            jsErrorCount = 0,
+            command = getCommand(location.host, location.pathname),
+            reportHabo = 1,
+            queue = [],
+            isReporting = false,
+            hasReportPv = false;        var report = function() {
+            var data = queue.shift();
+            if (!data) {
+                isReporting = false;
+                return;
+            }
+            isReporting = true;
+            data.reportHabo = reportHabo;
+            reportHabo = 0;
+            send(data, function(o) {
+                if (o && o.code == 0 && o.data && o.data.result != 1) {
+                    reportHabo = data.reportHabo;
+                }
+                setTimeout(report, 1000);
+            }, function() {
+                report();
+            });
+        };
+        window.reportJsError = function(data) {
+            reportPv();
+            if (jsErrorCount++ >= maxJsErrorCount) {return;}
+            queue.push(data);
+            !isReporting && report();
+        };
+        var onError = function(event) {
+            var data = {
+                appid: appid,
+                error: event.message,
+                stack: event.error && event.error.stack || '',
+                url: location.href,
+                scriptUrl: event.filename,
+                lineNumber: event.lineno,
+                columnNumber: event.colno
+            };
+            var fn = window.beforeJsErrorReport;
+            if (typeof fn === 'function' && false === fn(data)) {
+                return;
+            }
+            window.reportJsError(data);
+        };
+        var reportPv = function() {
+            if (hasReportPv) {return;}
+            window.reportHaboGlobal && reportHaboGlobal(0, appid, command);
+            hasReportPv = true;
+        };
+        if (window.addEventListener) {
+            window.addEventListener('error', onError);
+            window.addEventListener('load', reportPv);
+        } else if (window.attachEvent) {
+            window.attachEvent('onerror', onError);
+            window.attachEvent('onload', reportPv);
+        } else {
+            window.onerror = onError;
+            setTimeout(reportPv, 3000);
+        }
+        window.listenError = true;
+    })();
 </script>    </head>    <body class="weiyun-note">
         <div class="wy-share-wrap">            <div id="noteContainer">
             <section class="wy-notes-wrapper">
