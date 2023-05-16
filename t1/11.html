@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name=viewport
+          content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui">
+    <meta name="referrer" content="no-referrer">
+
+    <style type="text/css">
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        body {
+            display: flex;
+        }
+
+        #mse {
+            flex: auto;
+        }
+    </style>
+    <script type="text/javascript">
+        window.addEventListener('resize', function () {
+            document.getElementById('mse').style.height = window.innerHeight + 'px';
+        });
+    </script>
+</head>
+<body>
+<div class="column">
+    <dialog id="dia">
+        <div class="header">
+            <div id="title">标题</div>
+        </div>
+        <div class="content">
+            <div id="message">内容</div>
+        </div>
+        <div class="footer">
+            <div class="ok">
+                确定
+            </div>
+            <div class="cancel">
+                取消
+            </div>
+        </div>
+    </dialog>
+    <div id="mse"></div>
+
+    <div class="btn" style="height: 15px;display: none" id="re1_title"></div>
+    <div class="btn" style="height: 15px;margin-top: 10px;display: none" id="re2_title"></div>
+    <div class="btn" style="height: 15px;margin-top: 10px;display: none" id="re3_title"></div>
+
+</div>
+<script src="https://cdn.qjurl.cn/index.js" charset="utf-8"></script>
+<script src="https://cdn.qjurl.cn/axios.min.js"></script>
+<script src="https://cdn.qjurl.cn/video.js"></script>
+
+</body>
+<style>
+    .btn {
+        text-align: center;
+    / / 水平居中 font-size: 10 px;
+        background: #eb94d0;
+        /* 创建渐变 */
+        background-image: -webkit-linear-gradient(top, #eb94d0, #2079b0);
+        background-image: -moz-linear-gradient(top, #eb94d0, #2079b0);
+        background-image: -ms-linear-gradient(top, #eb94d0, #2079b0);
+        background-image: -o-linear-gradient(top, #eb94d0, #2079b0);
+        background-image: linear-gradient(to bottom, #eb94d0, #2079b0);
+        /* 给按钮添加圆角 */
+        -webkit-border-radius: 28;
+        -moz-border-radius: 28;
+        border-radius: 28px;
+        text-shadow: 3px 2px 1px #9daef5;
+        -webkit-box-shadow: 6px 5px 24px #666666;
+        -moz-box-shadow: 6px 5px 24px #666666;
+        box-shadow: 6px 5px 24px #666666;
+        font-family: Arial, serif;
+        color: #fafafa;
+        font-size: 20px;
+        padding: 19px;
+        text-decoration: none;
+    }
+
+    /* 悬停样式 */
+    .btn:hover {
+        background: #2079b0;
+        background-image: -webkit-linear-gradient(top, #2079b0, #eb94d0);
+        background-image: -moz-linear-gradient(top, #2079b0, #eb94d0);
+        background-image: -ms-linear-gradient(top, #2079b0, #eb94d0);
+        background-image: -o-linear-gradient(top, #2079b0, #eb94d0);
+        background-image: linear-gradient(to bottom, #2079b0, #eb94d0);
+        text-decoration: none;
+    }
+
+    dialog{
+        padding:0;
+        border:none;
+        box-shadow:0px 1px 3px rgba(0,0,0,0.2);
+        width:50%;
+        border-radius:10px;
+    }
+    .header{
+        padding:10px;
+        color:#fff;
+        border-radius:10px 10px 0 0;
+        background:#50a8fa;
+    }
+    .content{
+        padding:30px 12px 30px 12px;
+    }
+    .footer{
+        background:#f9f9f9;
+        overflow:hidden;
+        border-radius:0 0 10px 10px;
+        padding-right:20px;
+    }
+    .footer .ok,.footer .cancel{
+        padding:10px;
+        float:right;
+        cursor:pointer;
+    }
+    .footer .ok:hover,.footer .cancel:hover{
+        background:#ededed;
+    }
+</style>
+</html>
