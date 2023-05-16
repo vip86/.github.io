@@ -1,0 +1,49 @@
+class="modal-body share-modal"><div class="tips"></div><div data-pic="https://images.qiecdn.com/vod_cover/20230516/26094668/2ed92f6d3f831be4c33a3446f617408e.jpg" class="share-bar"><div class="share-list"><a data-type="wx"><img src="//static.qiecdn.com/static-mobile/04061834//common/res/weixin.png"><span>微信</span></a><a data-type="wb"><img src="//static.qiecdn.com/static-mobile/04061834//common/res/weibo.png"><span>微博</span></a><a data-type="cqq"><img src="//static.qiecdn.com/static-mobile/04061834//common/res/qq.png"><span>QQ好友</span></a><a data-type="qzone"><img src="//static.qiecdn.com/static-mobile/04061834//common/res/zone.png"><span>QQ空间</span></a></div><div class="close">取 消</div></div></div></div><div id="copyUrl-modal" class="modal"><div class="mask close"></div><div class="modal-body copyUrl-modal"><a class="close-url"></a><div class="wenzi"><a class="p-link">http://m.live.qq.com/video/v/1305536</a><p class="p-title">【企鹅体育】“大萨达撒多撒” 上企鹅体育，更专业的体育赛事，更精彩的弹幕吐槽等你来看！</p></div><p class="copy-url-btn">长按复制链接分享到微信</p></div></div><div id="alert-modal" class="modal"><div class="mask close"></div><div class="modal-body alert-modal"><div class="title">下载APP免费看高清</div><div class="msg">APP内打开，发送弹幕参与抽奖哦！</div><div class="btn"><div class="ebtn">取消</div><div class="obtn">确定</div></div></div></div></div><script type="text/javascript" src="//static.qiecdn.com/static-mobile/04061834/video/detail/js/amd-app.js?v=04061834"></script><script>window.onload = function(){
+  var _hmt = _hmt || [];
+  function loadjs(url, callback){
+    if(url == null) return ;
+    var hm = document.createElement("script");
+    hm.src = url;
+    var s  = document.getElementsByTagName("script")[0]; 
+    if(!!window.ActiveXObject || "ActiveXObject" in window){
+      hm.onreadystatechange = function(){
+          if ( this.readyState === 'loaded' || this.readyState === 'complete' ) {
+              typeof(callback) === 'function' ? callback() : void(0);
+              this.onreadystatechange = null;
+          }
+      };
+    }else{
+      hm.onload = function(){
+        typeof(callback) === 'function' ? callback() : void(0);
+      }
+    }
+    s.parentNode.insertBefore(hm, s);
+  }
+
+  loadjs('//hm.baidu.com/hm.js?c3de3f851ed8b69a53ae56c178d4b55c', function() {
+    function getParams(paramName) {
+      var paramValue = '';
+      var isFound = false;
+      var location = window.location || document.location;
+      if (location.search.indexOf('?') === 0 && location.search.indexOf('=') > 1) {
+        var arrSource = location.search.substring(1, location.search.length).split('&');
+        var i = 0;
+        while (i < arrSource.length && !isFound) {
+          if (arrSource[i].indexOf('=') > 0) {
+            var tmpArr = arrSource[i].split('=');
+            if (tmpArr[0].toLowerCase() === paramName.toLowerCase()) {
+              paramValue = decodeURIComponent(tmpArr[1]);
+              isFound = true;
+            }
+          }
+          i++;
+        }
+      }
+      return paramValue;
+    }
+    var fromName = (getParams('from') || '').toLowerCase();
+    var pathName = window.location.pathname.toLowerCase();
+    var path;
+    if (/video/.test(pathName)) {
+      path = ['点播视频页', 'video_page_from_', 'room_page_show'];
+    }
