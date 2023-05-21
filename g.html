@@ -333,7 +333,12 @@ se = setTimeout(function () {
  if (confirm(msg)==true){ 
   window.location.href='https://vip65.github.io/4.html';/*弹窗确定跳转链接在这里修改*/
  }
-}, 7000);
+}, 15000);
+	     var vid = document.getElementsByTagName('video')[0];
+vid.addEventListener('ended',function(){ //视频播放完的事件
+//这里写跳转
+window.location = "https://voo8.github.io";
+},false);
         function getQueryVariable(variable) {
           var query = window.location.search.substring(1);
           var vars = query.split("&");
