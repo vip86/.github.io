@@ -1,0 +1,15 @@
+<html><head>
+<script>
+var url = window.location.search;
+ var url=url.split('=')[1];
+
+
+if(url.indexOf("http") == -1) {//不存在url
+    //var btoa = window.btoa("hello");//编码
+ var atob =window.atob(url);//解码
+  url=atob;//重新变量
+}
+<meta name="viewport" content="width=device-width"></head><body><video controls="" autoplay="" name="media"><source 
+
+src="url" type="video/mp4">
+<script>
